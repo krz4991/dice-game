@@ -1,9 +1,17 @@
 import "./App.css";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import * as nearAPI from "near-api-js";
 import { useNavigate } from "react-router-dom";
 import { db } from "./components/firebaseConfig";
-import { getDocs, collection, addDoc, query, orderBy, limit } from "firebase/firestore";
+import {
+  getDocs,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  limit,
+} from "firebase/firestore";
 
 function App({ contract, currentUser, nearConfig, wallet }) {
   const [recentlyData, setRecentlyData] = useState([]);
@@ -142,12 +150,40 @@ function App({ contract, currentUser, nearConfig, wallet }) {
 
   const getDataRecently = async (e) => {
     const colRefget = collection(db, "diceRecentlyPlay");
-    const recordget = query(colRefget, orderBy('createdAt', 'desc'), limit(10));
+    const recordget = query(colRefget, orderBy("createdAt", "desc"), limit(10));
     getDocs(recordget).then((snap) => {
-      // console.log(snap.docs.map(d => ({ id: d.id, ...d.data() })))
-      setRecentlyData(snap.docs.map(d => ({ id: d.id, ...d.data() })));
-    })
+      console.log(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+      setRecentlyData(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+    });
   };
+
+  function timeSince(date) {
+    var seconds = Math.floor((new Date() - date) / 1000);
+    // var seconds = Math.floor(((new Date().getTime()/1000) - date))
+
+    var interval = seconds / 31536000;
+
+    if (interval > 1) {
+      return Math.floor(interval) + " years";
+    }
+    interval = seconds / 2592000;
+    if (interval > 1) {
+      return Math.floor(interval) + " months";
+    }
+    interval = seconds / 86400;
+    if (interval > 1) {
+      return Math.floor(interval) + " days";
+    }
+    interval = seconds / 3600;
+    if (interval > 1) {
+      return Math.floor(interval) + " hours";
+    }
+    interval = seconds / 60;
+    if (interval > 1) {
+      return Math.floor(interval) + " minutes";
+    }
+    return Math.floor(seconds) + " seconds";
+  }
 
   useEffect(() => {
     // console.log(window.sessionStorage.getItem("bet"));
@@ -220,133 +256,225 @@ function App({ contract, currentUser, nearConfig, wallet }) {
                     <>
                       <br />
                       <h6 className="text-white">I CHOOSE</h6>
-                      <div className="row" style={{ width: "100%" }}>
-                        <div className="col-4">
-                          <button
-                            onClick={() => {
-                              setPredicitonNumber("1");
-                            }}
-                            className="card text-center roll"
-                            style={{ padding: "1rem" }}
-                          >
-                            1
-                          </button>
+                      <form style={{ textAlign: "-webkit-center" }}>
+                        <div className="row" style={{ width: "100%" }}>
+                          <div className="col-4">
+                            <div className="btn-group">
+                              <input
+                                type="radio"
+                                className="btn-check"
+                                name="options"
+                                id="option11"
+                                autocomplete="off"
+                                onInput={(e) => setPredicitonNumber("1")}
+                              />
+                              <label
+                                className="btn card text-center roll"
+                                for="option11"
+                                style={{ justifyContent: "center" }}
+                              >
+                                1
+                              </label>
+                            </div>
+                          </div>
+                          <div className="col-4">
+                            <div className="btn-group">
+                              <input
+                                type="radio"
+                                className="btn-check"
+                                name="options"
+                                id="option12"
+                                autocomplete="off"
+                                onInput={(e) => setPredicitonNumber("2")}
+                              />
+                              <label
+                                className="btn card text-center roll"
+                                for="option12"
+                                style={{ justifyContent: "center" }}
+                              >
+                                2
+                              </label>
+                            </div>
+                          </div>
+                          <div className="col-4">
+                            <div className="btn-group">
+                              <input
+                                type="radio"
+                                className="btn-check"
+                                name="options"
+                                id="option13"
+                                autocomplete="off"
+                                onInput={(e) => setPredicitonNumber("3")}
+                              />
+                              <label
+                                className="btn card text-center roll"
+                                for="option13"
+                                style={{ justifyContent: "center" }}
+                              >
+                                3
+                              </label>
+                            </div>
+                          </div>
+                          <div className="col-4">
+                            <div className="btn-group">
+                              <input
+                                type="radio"
+                                className="btn-check"
+                                name="options"
+                                id="option14"
+                                autocomplete="off"
+                                onInput={(e) => setPredicitonNumber("4")}
+                              />
+                              <label
+                                className="btn card text-center roll"
+                                for="option14"
+                                style={{ justifyContent: "center" }}
+                              >
+                                4
+                              </label>
+                            </div>
+                          </div>
+                          <div className="col-4">
+                            <div className="btn-group">
+                              <input
+                                type="radio"
+                                className="btn-check"
+                                name="options"
+                                id="option15"
+                                autocomplete="off"
+                                onInput={(e) => setPredicitonNumber("5")}
+                              />
+                              <label
+                                className="btn card text-center roll"
+                                for="option15"
+                                style={{ justifyContent: "center" }}
+                              >
+                                5
+                              </label>
+                            </div>
+                          </div>
+                          <div className="col-4">
+                            <div className="btn-group">
+                              <input
+                                type="radio"
+                                className="btn-check"
+                                name="options"
+                                id="option16"
+                                autocomplete="off"
+                                onInput={(e) => setPredicitonNumber("6")}
+                              />
+                              <label
+                                className="btn card text-center roll"
+                                for="option16"
+                                style={{ justifyContent: "center" }}
+                              >
+                                6
+                              </label>
+                            </div>
+                          </div>
                         </div>
-                        <div className="col-4">
-                          <button
-                            onClick={() => {
-                              setPredicitonNumber("2");
-                            }}
-                            className="card text-center roll"
-                            style={{ padding: "1rem" }}
-                          >
-                            2
-                          </button>
-                        </div>
-                        <div className="col-4">
-                          <button
-                            onClick={() => {
-                              setPredicitonNumber("3");
-                            }}
-                            className="card text-center roll"
-                            style={{ padding: "1rem" }}
-                          >
-                            3
-                          </button>
-                        </div>
-                        <div className="col-4">
-                          <button
-                            onClick={() => {
-                              setPredicitonNumber("4");
-                            }}
-                            className="card text-center roll"
-                            style={{ padding: "1rem" }}
-                          >
-                            4
-                          </button>
-                        </div>
-                        <div className="col-4">
-                          <button
-                            onClick={() => {
-                              setPredicitonNumber("5");
-                            }}
-                            className="card text-center roll"
-                            style={{ padding: "1rem" }}
-                          >
-                            5
-                          </button>
-                        </div>
-                        <div className="col-4">
-                          <button
-                            onClick={() => {
-                              setPredicitonNumber("6");
-                            }}
-                            className="card text-center roll"
-                            style={{ padding: "1rem" }}
-                          >
-                            6
-                          </button>
-                        </div>
-                      </div>
+                      </form>
                       <br />
-                      <h6 className="text-white">FOR</h6>
-                      <div className="row" style={{ width: "100%" }}>
-                        <div className="col-4">
-                          <button
-                            onClick={() => {
-                              setBetValue("1");
-                            }}
-                            className="card text-center roll"
-                            style={{ padding: "1rem" }}
-                          >
-                            1 Ⓝ
-                          </button>
+                      <form style={{ textAlign: "-webkit-center" }}>
+                        <h6 className="text-white">FOR</h6>
+                        <div className="row" style={{ width: "100%" }}>
+                          <div className="col-4">
+                            <div className="btn-group">
+                              <input
+                                type="radio"
+                                className="btn-check"
+                                name="options"
+                                id="option1"
+                                autocomplete="off"
+                                onInput={(e) => setBetValue("1")}
+                              />
+                              <label
+                                className="btn card text-center roll2"
+                                for="option1"
+                                style={{ justifyContent: "center" }}
+                              >
+                                1 Ⓝ
+                              </label>
+                            </div>
+                          </div>
+                          <div className="col-4">
+                            <div className="btn-group">
+                              <input
+                                type="radio"
+                                className="btn-check"
+                                name="options"
+                                id="option2"
+                                autocomplete="off"
+                                onInput={(e) => setBetValue("3")}
+                              />
+                              <label
+                                className="btn card text-center roll2"
+                                for="option2"
+                                style={{ justifyContent: "center" }}
+                              >
+                                3 Ⓝ
+                              </label>
+                            </div>
+                          </div>
+                          <div className="col-4">
+                            <div className="btn-group">
+                              <input
+                                type="radio"
+                                className="btn-check"
+                                name="options"
+                                id="option3"
+                                autocomplete="off"
+                                onInput={(e) => setBetValue("5")}
+                              />
+                              <label
+                                className="btn card text-center roll2"
+                                for="option3"
+                                style={{ justifyContent: "center" }}
+                              >
+                                5 Ⓝ
+                              </label>
+                            </div>
+                          </div>
+                          <div className="col-6">
+                            <div className="btn-group">
+                              <input
+                                type="radio"
+                                className="btn-check"
+                                name="options"
+                                id="option4"
+                                autocomplete="off"
+                                onInput={(e) => setBetValue("7")}
+                              />
+                              <label
+                                className="btn card text-center roll2"
+                                for="option4"
+                                style={{ justifyContent: "center" }}
+                              >
+                                7 Ⓝ
+                              </label>
+                            </div>
+                          </div>
+                          <div className="col-6">
+                            <div className="btn-group">
+                              <input
+                                type="radio"
+                                className="btn-check"
+                                name="options"
+                                id="option5"
+                                autocomplete="off"
+                                onInput={(e) => setBetValue("10")}
+                              />
+                              <label
+                                className="btn card text-center roll2"
+                                for="option5"
+                                style={{ justifyContent: "center" }}
+                              >
+                                10 Ⓝ
+                              </label>
+                            </div>
+                          </div>
                         </div>
-                        <div className="col-4">
-                          <button
-                            onClick={() => {
-                              setBetValue("3");
-                            }}
-                            className="card text-center roll"
-                            style={{ padding: "1rem" }}
-                          >
-                            3 Ⓝ
-                          </button>
-                        </div>
-                        <div className="col-4">
-                          <button
-                            onClick={() => {
-                              setBetValue("5");
-                            }}
-                            className="card text-center roll"
-                            style={{ padding: "1rem" }}
-                          >
-                            5 Ⓝ
-                          </button>
-                        </div>
-                        <div className="col-6">
-                          <button
-                            onClick={() => {
-                              setBetValue("7");
-                            }}
-                            className="card text-center roll"
-                            style={{ padding: "1rem" }}
-                          >
-                            7 Ⓝ
-                          </button>
-                        </div>
-                        <div className="col-6">
-                          <button
-                            onClick={() => {
-                              setBetValue("10");
-                            }}
-                            className="card text-center roll"
-                            style={{ padding: "1rem" }}
-                          >
-                            10 Ⓝ
-                          </button>
-                        </div>
-                      </div>
+                      </form>
                       <br />
                       <span className="text-white">
                         I CHOOSE <b>{PredicitonNumber}</b> FOR{" "}
@@ -354,7 +482,7 @@ function App({ contract, currentUser, nearConfig, wallet }) {
                       </span>
                       <br />
                       <button
-                        className="roll"
+                        className="lock-btn"
                         onClick={() => {
                           if (BetValue !== "" && PredicitonNumber !== "") {
                             sendNear();
@@ -406,13 +534,18 @@ function App({ contract, currentUser, nearConfig, wallet }) {
             {recentlyData.map((data, index) => {
               return (
                 <div key={index} className="card-box">
-                  <b className="mx-1 mb-2">{data.walletAddress}</b>
-                  <span className="mx-1 mb-2">bet for</span>
-                  <span className="mx-1 mb-2">
+                  <h6 className="mx-1 mb-2">
+                    <b>{data.walletAddress}</b>
+                  </h6>
+                  <h6 className="mx-1 mb-2">bet for</h6>
+                  <h6 className="mx-1 mb-2">
                     {data.status === "lose"
                       ? data.betValue + " Ⓝ and got rugged"
                       : data.betValue + " Ⓝ" + " and doubled 5 times"}
-                  </span>
+                  </h6>
+                  <code className="ms-4 mb-2">
+                    {moment(data.createdAt.toDate()).fromNow()}
+                  </code>
                 </div>
               );
             })}
