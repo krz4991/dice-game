@@ -211,6 +211,51 @@ body {
   color: white;
   background: transparent;
   /* margin-top: 60px; */
+  padding: 1rem;
+  border-radius: 5px;
+  font: 700 16px "Montserrat";
+  border: 2px solid white;
+  transition: 0.4s;
+}
+
+.btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {
+  color: var(--bs-btn-active-color);
+  background-color: white;
+  border-color: white;
+}
+
+.btn-group{
+  width: 100%;
+  height: 100%;
+}
+
+/* .roll:focus-visible {
+  color: rgb(0, 0, 0);
+  background: white;
+} */
+
+.roll2 {
+  cursor: pointer;
+  color: white;
+  background: transparent;
+  /* margin-top: 60px; */
+  padding: 1rem;
+  border-radius: 5px;
+  font: 700 16px "Montserrat";
+  border: 2px solid white;
+  transition: 0.4s;
+}
+
+/* .roll2:focus-visible  {
+  color: rgb(0, 0, 0);
+  background: white;
+} */
+
+.lock-btn {
+  cursor: pointer;
+  color: white;
+  background: transparent;
+  /* margin-top: 60px; */
   padding: 6px 12px;
   border-radius: 5px;
   font: 700 16px "Montserrat";
@@ -218,7 +263,7 @@ body {
   transition: 0.4s;
 }
 
-.roll:hover {
+.lock-btn:focus {
   color: rgb(0, 0, 0);
   background: white;
 }
